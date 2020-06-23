@@ -1,6 +1,6 @@
 export const userPostFetch = user => {
     return dispatch => {
-        return fetch("http://localhost:3000/register", {
+        return fetch("http://localhost:8080/authenticate", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

@@ -50,7 +50,13 @@ export default function SimpleTable() {
     let isLoading = true;
 
     async function sampleFunc() {
-        let response = await fetch("/credentials");
+        let response = await fetch("/credentials", {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXAyMSIsImV4cCI6MTU5Mjk1NjU5NiwiaWF0IjoxNTkyOTM4NTk2fQ.iw-yjXQtSJczEp9q7iQYtb2Y5UIp1wDLl-9VDqN6ElUcAyjVmGh7jBbvu_ms8M8RLJXj2VF3jSbs7zn6WeRC5A"
+            }
+        });
         let body = await response.json();
         upDateData(body);
     }

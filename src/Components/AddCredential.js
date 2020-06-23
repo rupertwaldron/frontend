@@ -59,7 +59,7 @@ export default function AddCredential() {
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXAyMSIsImV4cCI6MTU5MjkzNTU4MiwiaWF0IjoxNTkyOTE3NTgyfQ.JnwSGwHIBIu3iJgb2us36-mrwy-BkYcQlLs33bRmKf6pZqY2DyS_Wxd62Q6Oov82oIiq1ds_UJg6OW-TFmi0KA"
+                "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXAyMSIsImV4cCI6MTU5Mjk1NjU5NiwiaWF0IjoxNTkyOTM4NTk2fQ.iw-yjXQtSJczEp9q7iQYtb2Y5UIp1wDLl-9VDqN6ElUcAyjVmGh7jBbvu_ms8M8RLJXj2VF3jSbs7zn6WeRC5A"
             },
             redirect: "follow", // manual, *follow, error
             referrerPolicy: "no-referrer", // no-referrer, *client
