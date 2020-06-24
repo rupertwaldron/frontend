@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -52,21 +52,32 @@ export default function SimpleTable() {
     async function sampleFunc() {
         let response = await fetch("/credentials", {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXAyMSIsImV4cCI6MTU5Mjk1NjU5NiwiaWF0IjoxNTkyOTM4NTk2fQ.iw-yjXQtSJczEp9q7iQYtb2Y5UIp1wDLl-9VDqN6ElUcAyjVmGh7jBbvu_ms8M8RLJXj2VF3jSbs7zn6WeRC5A"
-            }
+                "Authorization": `Bearer ` + sessionStorage.getItem('jwt')
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
         });
         let body = await response.json();
         upDateData(body);
     }
 
     if (firstLoad) {
+        console.log("sessionStorage = " + sessionStorage.getItem('jwt'));
         sampleFunc();
         setLoad(false);
     }
 
     if (data.length > 0) isLoading = false;
+
+
+    useEffect(() => {
+        console.log('Table Rendering Credentials: ');
+    }, [data])
 
     return (
         <div className={classes.paper}>
@@ -94,8 +105,8 @@ export default function SimpleTable() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data?.map(row => (
-                                <TableRow key={row.name}>
+                            {data?.map((row, index) => (
+                                <TableRow key={index}>
                                     <TableCell align="center">{row.credentialName}</TableCell>
                                     <TableCell align="center">{row.url}</TableCell>
                                     <TableCell align="center">{row.login}</TableCell>

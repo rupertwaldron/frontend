@@ -1,42 +1,51 @@
 import React, {useState} from "react";
-import Table from "./Table";
+import {Redirect} from "react-router";
 
 const Login = () => {
-    const initialUserName = {username: ""};
-    const [userName, setUserName] = useState(initialUserName);
-    const [password, setPassword] = useState("");
+    const initialState = {username: "", password: "", isAuthenticated: false, open: false};
+    const [userInfo, setUserInfo] = useState(initialState);
 
     const handleUserName = (event) => {
-        setUserName(event.target.value);
-        console.log("Event value = " + userName + " password: " + password);
+        setUserInfo({...userInfo, username: event.target.value})
+        console.log("Event value = " + userInfo.username + " password: " + userInfo.password);
     }
 
     const handlePassword = (event) => {
-        setPassword(event.target.value);
-        console.log("Event value = " + userName + " password: " + password);
+        setUserInfo({...userInfo, password: event.target.value})
+        console.log("Event value = " + userInfo.username + " password: " + userInfo.password);
     }
 
     const login = () => {
-        console.log("User = " + userName + " : " + password);
-        // fetch("http://localhost:8080/authenticate", {
-        //     method: 'POST',
-        //     body: JSON.stringify(user)
-        // })
-        //     .then(res => {
-        //         const jwtToken = res.headers.get('Authorization');
-        //         if (jwtToken !== null) {
-        //             sessionStorage.setItem("jwt", jwtToken);
-        //             setLoginInfo({...loginInfo, isAuthenticated: true});
-        //         }
-        //         else {
-        //             setLoginInfo({...loginInfo, open: true});
-        //         }
-        //     })
-        //     .catch(err => console.error(err))
+        console.log("User = " + userInfo.username + " : " + userInfo.password);
+        const user = {username: userInfo.username, password: userInfo.password};
+        fetch("http://localhost:8080/authenticate", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(user)
+        })
+            .then(response => response.json())
+            .then(responseData => {
+                const {token} = responseData;
+                console.log("jwt token: " + token);
+                if (token !== null) {
+                    sessionStorage.setItem("jwt", token);
+                    setUserInfo({...userInfo, isAuthenticated: true});
+                } else {
+                    setUserInfo({...userInfo, open: true});
+                }
+            })
+            .catch(err => console.error(err));
     };
 
-    if (false) {
-        return (<Table />)
+    if (userInfo.isAuthenticated) {
+        return (<Redirect to="/view"/>);
     } else {
         return (
             <div id="login">

@@ -59,7 +59,7 @@ export default function AddCredential() {
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJydXAyMSIsImV4cCI6MTU5Mjk1NjU5NiwiaWF0IjoxNTkyOTM4NTk2fQ.iw-yjXQtSJczEp9q7iQYtb2Y5UIp1wDLl-9VDqN6ElUcAyjVmGh7jBbvu_ms8M8RLJXj2VF3jSbs7zn6WeRC5A"
+                "Authorization": `Bearer ` + sessionStorage.getItem('jwt')
             },
             redirect: "follow", // manual, *follow, error
             referrerPolicy: "no-referrer", // no-referrer, *client
@@ -154,7 +154,6 @@ export default function AddCredential() {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        preventDefault
                         className={classes.submit}
                         onClick={handleSubmit}
                     >
