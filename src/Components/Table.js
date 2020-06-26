@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,9 +9,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import GroupIcon from "@material-ui/icons/Group";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {Redirect} from "react-router";
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -47,7 +48,8 @@ export default function SimpleTable() {
 
     const [data, upDateData] = React.useState([]);
     const [firstLoad, setLoad] = React.useState(true);
-    let isLoading = true;
+    const [statusCode, setStatusCode] = React.useState(200);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     async function sampleFunc() {
         let response = await fetch("/credentials", {
@@ -62,8 +64,14 @@ export default function SimpleTable() {
             redirect: "follow", // manual, *follow, error
             referrerPolicy: "no-referrer", // no-referrer, *client
         });
-        let body = await response.json();
-        upDateData(body);
+        setStatusCode(response.status);
+        try {
+            let body = await response.json();
+            upDateData(body);
+        } catch (error) {
+            console.error("My error = " + error);
+        }
+
     }
 
     if (firstLoad) {
@@ -72,51 +80,70 @@ export default function SimpleTable() {
         setLoad(false);
     }
 
-    if (data.length > 0) isLoading = false;
-
+    // if (data.length > 0) isLoading = false;
 
     useEffect(() => {
         console.log('Table Rendering Credentials: ');
+        setIsLoading(false);
     }, [data])
+
+    const view = <TableContainer
+        style={{width: "80%", margin: "0 10px"}}
+        component={Paper}
+    >
+        <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="center">CredentialName</TableCell>
+                    <TableCell align="center">Url</TableCell>
+                    <TableCell align="center">Login</TableCell>
+                    <TableCell align="center">Password</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data?.map((row, index) => (
+                    <TableRow key={index}>
+                        <TableCell align="center">{row.credentialName}</TableCell>
+                        <TableCell align="center">{row.url}</TableCell>
+                        <TableCell align="center">{row.login}</TableCell>
+                        <TableCell align="center">{row.password}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </TableContainer>
+
+    const getDisplay = () => {
+        let display;
+
+        if (isLoading) {
+            display = <CircularProgress/>
+        } else {
+            switch (statusCode) {
+                case 200: return view
+                case 401: return (<Redirect to="/login"/>);
+                //case 401: return <h3>UnAuthorized</h3>
+                default: return <h3>Server Error</h3>
+            }
+        }
+        return display;
+    }
+
+
 
     return (
         <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <GroupIcon />
+                <GroupIcon/>
             </Avatar>
             <Typography component="h1" variant="h5">
                 Employee Directory
             </Typography>
 
-            {isLoading ? (
-                <CircularProgress />
-            ) : (
-                <TableContainer
-                    style={{ width: "80%", margin: "0 10px" }}
-                    component={Paper}
-                >
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">CredentialName</TableCell>
-                                <TableCell align="center">Url</TableCell>
-                                <TableCell align="center">Login</TableCell>
-                                <TableCell align="center">Password</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {data?.map((row, index) => (
-                                <TableRow key={index}>
-                                    <TableCell align="center">{row.credentialName}</TableCell>
-                                    <TableCell align="center">{row.url}</TableCell>
-                                    <TableCell align="center">{row.login}</TableCell>
-                                    <TableCell align="center">{row.password}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
+            {/*{(isLoading && statusCode === 200) ? <CircularProgress/> : view}*/}
+
+            {getDisplay()}
+
             <Link className={classes.link} to="/">
                 {" "}
                 <Typography align="left">
