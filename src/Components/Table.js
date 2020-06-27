@@ -6,9 +6,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
-import GroupIcon from "@material-ui/icons/Group";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     },
     avatar: {
         margin: theme.spacing(1),
+        //backgroundColor: theme.palette.secondary.main
         backgroundColor: theme.palette.secondary.main
     },
     paper: {
@@ -39,6 +41,14 @@ const useStyles = makeStyles(theme => ({
         alignSelf: "flex-start",
         "&:hover": {
             color: "rgba(0,0,0,1)"
+        }
+    },
+    button: {
+        backgroundColor: theme.palette.secondary.main,
+        color: "white",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light,
+            color: "yellow"
         }
     }
 }));
@@ -98,15 +108,18 @@ export default function SimpleTable() {
                     <TableCell align="center">Url</TableCell>
                     <TableCell align="center">Login</TableCell>
                     <TableCell align="center">Password</TableCell>
+                    <TableCell align="center">        </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {data?.map((row, index) => (
                     <TableRow key={index}>
+                        <TableCell align="center">{row.guid}</TableCell>
                         <TableCell align="center">{row.credentialName}</TableCell>
                         <TableCell align="center">{row.url}</TableCell>
                         <TableCell align="center">{row.login}</TableCell>
                         <TableCell align="center">{row.password}</TableCell>
+                        <TableCell align="center"><Button className={classes.button} onClick={() => {}}>Edit</Button></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -134,10 +147,10 @@ export default function SimpleTable() {
     return (
         <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <GroupIcon/>
+                <LockOpenIcon/>
             </Avatar>
             <Typography component="h1" variant="h5">
-                Employee Directory
+                Credentials
             </Typography>
 
             {/*{(isLoading && statusCode === 200) ? <CircularProgress/> : view}*/}
