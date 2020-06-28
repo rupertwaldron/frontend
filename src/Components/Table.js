@@ -50,6 +50,11 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.secondary.light,
             color: "yellow"
         }
+    },
+    redirection: {
+        "&:hover": {
+            color: theme.palette.secondary.light
+        }
     }
 }));
 
@@ -114,7 +119,7 @@ export default function SimpleTable() {
                 {data?.map((row, index) => (
                     <TableRow key={index}>
                         <TableCell align="center">
-                            <Link to={{
+                            <Link className={classes.redirection} to={{
                                 pathname: '/update',
                                 state: {
                                     //name: row.credentialName
@@ -128,7 +133,7 @@ export default function SimpleTable() {
                                 {row.credentialName}
                             </Link>
                         </TableCell>
-                        <TableCell align="center"><a href={`https://` + row.url} target="_blank" rel="noopener noreferrer">{row.url}</a></TableCell>
+                        <TableCell align="center"><a className={classes.redirection} href={`https://` + row.url} target="_blank" rel="noopener noreferrer">{row.url}</a></TableCell>
                         <TableCell align="center">{row.login}</TableCell>
                         <TableCell align="center">{row.password}</TableCell>
                         <TableCell align="center">

@@ -97,6 +97,7 @@ export default function UpdateCredential(props) {
         setUrl("");
         setLogin("");
         setPassword("");
+        setUuid("");
     };
 
     if (firstLoad) {
