@@ -68,7 +68,26 @@ export default function UpdateCredential(props) {
         });
         let body = await response.json();
         console.log(body.id);
-        setMessage(body.id ? "Data sucessfully updated" : "Data updation failed");
+        setMessage(body.id ? "Data sucessfully updated" : "Data update failed");
+    }
+
+    async function handleDelete() {
+        const response = await fetch(`/credentials/` + uuid, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ` + sessionStorage.getItem('jwt')
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            //body: JSON.stringify(toInput) // body data type must match "Content-Type" header
+        });
+        let body = await response.json();
+        console.log(body.id);
+        setMessage(body.id ? "Data sucessfully deleted" : "Data deletion failed");
     }
 
     const handleSubmit = variables => {
@@ -164,6 +183,17 @@ export default function UpdateCredential(props) {
                         onClick={handleSubmit}
                     >
                         Update
+                    </Button>
+
+                    <Button
+                        // type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        className={classes.submit}
+                        onClick={handleDelete}
+                    >
+                        Delete
                     </Button>
 
                     <Grid container justify="center">
