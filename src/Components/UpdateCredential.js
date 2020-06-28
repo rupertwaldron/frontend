@@ -40,9 +40,10 @@ export default function UpdateCredential(props) {
     const [firstLoad, setLoad] = React.useState(true);
 
     const [credentialName, setCredentialName] = React.useState(props.location.state.name);
-    const [url, setUrl] = React.useState("");
-    const [login, setLogin] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [url, setUrl] = React.useState(props.location.state.url);
+    const [login, setLogin] = React.useState(props.location.state.login);
+    const [password, setPassword] = React.useState(props.location.state.password);
+    const [uuid, setUuid] = React.useState(props.location.state.uuid);
 
     const handlePasswordChange = event => setPassword(event.target.value);
     const handleCredentialNameChange = event => setCredentialName(event.target.value);
@@ -52,8 +53,8 @@ export default function UpdateCredential(props) {
     const [message, setMessage] = React.useState("Nothing saved in the session");
 
     async function sampleFunc(toInput) {
-        const response = await fetch("/credentials", {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+        const response = await fetch(`/credentials/` + uuid, {
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
             credentials: "same-origin", // include, *same-origin, omit
@@ -85,11 +86,7 @@ export default function UpdateCredential(props) {
     }
 
     useEffect(() => {
-        // const {name} = props.location.state;
-        // const {url} = props.location.state;
-        // const {login} = props.location.state;
         const {name, url, login, password, uuid} = props.location.state;
-
         console.log("My props: "+  name + ", " + url + ", " + login + ", " + password + ", " + uuid);
     })
 
