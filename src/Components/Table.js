@@ -114,7 +114,17 @@ export default function SimpleTable() {
                 {data?.map((row, index) => (
                     <TableRow key={index}>
                         <TableCell align="center">
-                            <Link to='/update'>
+                            <Link to={{
+                                pathname: '/update',
+                                state: {
+                                    //name: row.credentialName
+                                    name: row.credentialName,
+                                    url: row.url,
+                                    login: row.login,
+                                    password: row.password,
+                                    uuid: row.uuid
+                                }
+                            }}>
                                 {row.credentialName}
                             </Link>
                         </TableCell>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -35,11 +35,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function AddCredential() {
+export default function UpdateCredential(props) {
     const classes = useStyles();
     const [firstLoad, setLoad] = React.useState(true);
 
-    const [credentialName, setCredentialName] = React.useState("");
+    const [credentialName, setCredentialName] = React.useState(props.location.state.name);
     const [url, setUrl] = React.useState("");
     const [login, setLogin] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -83,6 +83,15 @@ export default function AddCredential() {
         // sampleFunc();
         setLoad(false);
     }
+
+    useEffect(() => {
+        // const {name} = props.location.state;
+        // const {url} = props.location.state;
+        // const {login} = props.location.state;
+        const {name, url, login, password, uuid} = props.location.state;
+
+        console.log("My props: "+  name + ", " + url + ", " + login + ", " + password + ", " + uuid);
+    })
 
     return (
         <Container component="main" maxWidth="xs">
@@ -157,12 +166,12 @@ export default function AddCredential() {
                         className={classes.submit}
                         onClick={handleSubmit}
                     >
-                        Save
+                        Update
                     </Button>
 
                     <Grid container justify="center">
                         <Grid item>
-                            <Link to="/view">View Employee Records</Link>
+                            <Link to="/view">View Credentials</Link>
                         </Grid>
                     </Grid>
                 </form>
