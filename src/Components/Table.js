@@ -6,7 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -108,18 +108,24 @@ export default function SimpleTable() {
                     <TableCell align="center">Url</TableCell>
                     <TableCell align="center">Login</TableCell>
                     <TableCell align="center">Password</TableCell>
-                    <TableCell align="center">        </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {data?.map((row, index) => (
                     <TableRow key={index}>
-                        <TableCell align="center">{row.guid}</TableCell>
-                        <TableCell align="center">{row.credentialName}</TableCell>
-                        <TableCell align="center">{row.url}</TableCell>
+                        <TableCell align="center">
+                            <Link to='/update'>
+                                {row.credentialName}
+                            </Link>
+                        </TableCell>
+                        <TableCell align="center"><a href={`https://` + row.url} target="_blank" rel="noopener noreferrer">{row.url}</a></TableCell>
                         <TableCell align="center">{row.login}</TableCell>
                         <TableCell align="center">{row.password}</TableCell>
-                        <TableCell align="center"><Button className={classes.button} onClick={() => {}}>Edit</Button></TableCell>
+                        <TableCell align="center">
+                            {/*<Link to="/">*/}
+                            {/*    <Button className={classes.button} onClick={onEdit}>Edit</Button>*/}
+                            {/*</Link>*/}
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -133,15 +139,17 @@ export default function SimpleTable() {
             display = <CircularProgress/>
         } else {
             switch (statusCode) {
-                case 200: return view
-                case 401: return (<Redirect to="/login"/>);
+                case 200:
+                    return view
+                case 401:
+                    return (<Redirect to="/login"/>);
                 //case 401: return <h3>UnAuthorized</h3>
-                default: return <h3>Server Error</h3>
+                default:
+                    return <h3>Server Error</h3>
             }
         }
         return display;
     }
-
 
 
     return (
