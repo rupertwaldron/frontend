@@ -1,12 +1,10 @@
 import React, {useEffect} from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-// import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -14,49 +12,8 @@ import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {Redirect} from "react-router";
+import useStyles from "./styles";
 
-const useStyles = makeStyles(theme => ({
-    table: {
-        minWidth: 600
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        //backgroundColor: theme.palette.secondary.main
-        backgroundColor: theme.palette.secondary.main
-    },
-    paper: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: `10px`,
-        height: "100%",
-        width: "99%",
-        marginTop: theme.spacing(7)
-    },
-    link: {
-        color: "rgba(0,0,0,0.65)",
-        textDecoration: "none",
-        marginLeft: "10%",
-        alignSelf: "flex-start",
-        "&:hover": {
-            color: "rgba(0,0,0,1)"
-        }
-    },
-    button: {
-        backgroundColor: theme.palette.secondary.main,
-        color: "white",
-        "&:hover": {
-            backgroundColor: theme.palette.secondary.light,
-            color: "yellow"
-        }
-    },
-    redirection: {
-        "&:hover": {
-            color: theme.palette.secondary.light
-        }
-    }
-}));
 
 export default function SimpleTable() {
     const classes = useStyles();
@@ -95,24 +52,19 @@ export default function SimpleTable() {
         setLoad(false);
     }
 
-    // if (data.length > 0) isLoading = false;
-
     useEffect(() => {
         console.log('Table Rendering Credentials: ');
         setIsLoading(false);
     }, [data])
 
-    const view = <TableContainer
-        style={{width: "80%", margin: "0 10px"}}
-        component={Paper}
-    >
-        <Table className={classes.table} aria-label="simple table">
+    const view = <TableContainer className={classes.tableContainer} component={Paper}>
+        <Table className={classes.table}>
             <TableHead>
                 <TableRow>
-                    <TableCell align="center">CredentialName</TableCell>
-                    <TableCell align="center">Url</TableCell>
-                    <TableCell align="center">Login</TableCell>
-                    <TableCell align="center">Password</TableCell>
+                    <TableCell className={classes.tableTitle}>CredentialName</TableCell>
+                    <TableCell className={classes.tableTitle}>Url</TableCell>
+                    <TableCell className={classes.tableTitle}>Login</TableCell>
+                    <TableCell className={classes.tableTitle}>Password</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -122,7 +74,6 @@ export default function SimpleTable() {
                             <Link className={classes.redirection} to={{
                                 pathname: '/update',
                                 state: {
-                                    //name: row.credentialName
                                     name: row.credentialName,
                                     url: row.url,
                                     login: row.login,
@@ -133,14 +84,10 @@ export default function SimpleTable() {
                                 {row.credentialName}
                             </Link>
                         </TableCell>
-                        <TableCell align="center"><a className={classes.redirection} href={`https://` + row.url} target="_blank" rel="noopener noreferrer">{row.url}</a></TableCell>
+                        <TableCell align="center"><a className={classes.redirection} href={`https://` + row.url}
+                                                     target="_blank" rel="noopener noreferrer">{row.url}</a></TableCell>
                         <TableCell align="center">{row.login}</TableCell>
                         <TableCell align="center">{row.password}</TableCell>
-                        <TableCell align="center">
-                            {/*<Link to="/">*/}
-                            {/*    <Button className={classes.button} onClick={onEdit}>Edit</Button>*/}
-                            {/*</Link>*/}
-                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
