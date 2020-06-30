@@ -41,7 +41,7 @@ const Login = () => {
     const classes = useStyles();
     const initialState = {username: "", password: "", isAuthenticated: false, open: false};
     const [userInfo, setUserInfo] = useState(initialState);
-    const [message, setMessage] = React.useState("Login failed");
+    const [message, setMessage] = React.useState("");
 
     const handleUserName = event => setUserInfo({...userInfo, username: event.target.value});
 
@@ -83,28 +83,6 @@ const Login = () => {
             })
             .catch(err => console.error(err));
     };
-
-    const view =  <div id="login">
-        <h3 className="text-center text-white pt-5">Login form</h3>
-        <div className="container">
-            <div id="login-row" className="row justify-content-center align-items-center">
-                <div id="login-column" className="col-md-6">
-                    <div id="login-box" className="col-md-12">
-                        <div className="form-group">
-                            <input type="text" name="username" onChange={handleUserName}
-                                   className="form-control" placeholder="username"/>
-                        </div>
-                        <div className="form-group">
-                            <input type="password" name="password" onChange={handlePassword}
-                                   className="form-control" placeholder="password"/>
-                        </div>
-                        <input type="submit" name="submit" onClick={login} className="btn btn-info btn-md"
-                               value="Login"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     const loginDisplay = <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -157,7 +135,7 @@ const Login = () => {
 
                 <Grid container justify="center">
                     <Grid item>
-                        <Link to="/view">View Employee Records</Link>
+                        <Link to="/register">Register</Link>
                     </Grid>
                 </Grid>
             </form>
@@ -170,10 +148,7 @@ const Login = () => {
     if (userInfo.isAuthenticated) {
         return (<Redirect to="/view"/>);
     } else {
-        return (loginDisplay
-
-
-        );
+        return (loginDisplay);
     }
 
 }

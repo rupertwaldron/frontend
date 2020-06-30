@@ -3,6 +3,7 @@ import AddCredential from "./Components/AddCredential";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import Table from "./Components/Table";
 import Login from "./Components/Login";
+import Register from "./Components/Register";
 import UpdateCredential from "./Components/UpdateCredential";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
@@ -28,6 +29,7 @@ const App = () => {
         <Provider store={store}>
             <Router>
                 <Route exact path="/login" component={Login}/>
+                <Route exact path="/register" component={Register}/>
                 <Route exact path="/" component={AddCredential}/>
                 <Route exact path="/view" component={Table}/>
                 <Route exact path="/update" component={UpdateCredential}/>

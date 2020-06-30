@@ -1,54 +1,146 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {userPostFetch} from './actions';
+import React, {useState} from "react";
+import {Redirect} from "react-router";
+import {makeStyles} from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Avatar from "@material-ui/core/Avatar";
+import GroupIcon from "@material-ui/icons/Group";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import {Link} from "react-router-dom";
 
-class Register extends Component {
-    state = {
-        username: "",
-        password: ""
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        marginTop: theme.spacing(7),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(3)
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2)
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: "100%"
+    }
+}));
+
+const Register = () => {
+    const classes = useStyles();
+    const initialState = {username: "", password: ""};
+    const [userInfo, setUserInfo] = useState(initialState);
+    const [message, setMessage] = React.useState("");
+    const [status, setStatus] = React.useState(0);
+
+    const handleUserName = event => setUserInfo({...userInfo, username: event.target.value});
+
+    const handlePassword = (event) => {
+        setUserInfo({...userInfo, password: event.target.value})
+        console.log("Event value = " + userInfo.username + " password: " + userInfo.password);
     }
 
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+    const login = () => {
+        console.log("User = " + userInfo.username + " : " + userInfo.password);
+        const user = {username: userInfo.username, password: userInfo.password};
+        fetch("http://localhost:8080/register", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(user)
+        })
+            .then(response => {
+                console.log(response.status);
+                setStatus(response.status);
+            })
+            .catch(err => console.error(err));
+    };
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.userPostFetch(this.state)
-    }
+    const loginDisplay = <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+                <GroupIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Register
+            </Typography>
+            <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="userName"
+                            value={userInfo.username}
+                            label="User Name"
+                            name="userName"
+                            autoComplete="userName"
+                            onChange={handleUserName}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="password"
+                            value={userInfo.password}
+                            label="password"
+                            name="password"
+                            autoComplete="password"
+                            onChange={handlePassword}
+                        />
+                    </Grid>
+                </Grid>
+                <Button
+                    // type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={login}
+                >
+                    Register
+                </Button>
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <h1>Sign Up For An Account</h1>
-
-                <label>Username</label>
-                <input
-                    name='username'
-                    placeholder='Username'
-                    value={this.state.username}
-                    onChange={this.handleChange}
-                /><br/>
-
-                <label>Password</label>
-                <input
-                    type='password'
-                    name='password'
-                    placeholder='Password'
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                /><br/>
-
-                <input type='submit'/>
+                <Grid container justify="center">
+                    <Grid item>
+                        <Link to="/login">Login</Link>
+                    </Grid>
+                </Grid>
             </form>
-        )
+            <Typography style={{ margin: 7 }} variant="body1">
+                Status: {message}
+            </Typography>
+        </div>
+    </Container>
+
+    if (status === 201) {
+        return (<Redirect to="/login"/>);
+    } else {
+        return (loginDisplay);
     }
+
 }
 
-const mapDispatchToProps = dispatch => ({
-    userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
-})
 
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;
