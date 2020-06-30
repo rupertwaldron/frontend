@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router";
 import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -36,6 +36,8 @@ const useStyles = makeStyles(theme => ({
         width: "100%"
     }
 }));
+
+//todo need to add attemp to get message correct
 
 const Login = () => {
     const classes = useStyles();
@@ -84,71 +86,76 @@ const Login = () => {
             .catch(err => console.error(err));
     };
 
-    const loginDisplay = <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-                <GroupIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-                Login
-            </Typography>
-            <form className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="userName"
-                            value={userInfo.username}
-                            label="User Name"
-                            name="userName"
-                            autoComplete="userName"
-                            onChange={handleUserName}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="password"
-                            value={userInfo.password}
-                            label="password"
-                            name="password"
-                            autoComplete="password"
-                            onChange={handlePassword}
-                        />
-                    </Grid>
-                </Grid>
-                <Button
-                    // type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={login}
-                >
-                    Login
-                </Button>
-
-                <Grid container justify="center">
-                    <Grid item>
-                        <Link to="/register">Register</Link>
-                    </Grid>
-                </Grid>
-            </form>
-            <Typography style={{ margin: 7 }} variant="body1">
-                Status: {message}
-            </Typography>
-        </div>
-    </Container>
+    useEffect(() => {
+        console.log('Cleanung up ');
+        setMessage(userInfo.isAuthenticated ? "" : "Login Failed");
+    }, [userInfo])
 
     if (userInfo.isAuthenticated) {
         return (<Redirect to="/view"/>);
     } else {
-        return (loginDisplay);
+        return (
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <GroupIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Login
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="userName"
+                                    value={userInfo.username}
+                                    label="User Name"
+                                    name="userName"
+                                    autoComplete="userName"
+                                    onChange={handleUserName}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="password"
+                                    value={userInfo.password}
+                                    label="password"
+                                    name="password"
+                                    autoComplete="password"
+                                    onChange={handlePassword}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            // type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={login}
+                        >
+                            Login
+                        </Button>
+
+                        <Grid container justify="center">
+                            <Grid item>
+                                <Link to="/register">Register</Link>
+                            </Grid>
+                        </Grid>
+                    </form>
+                    <Typography style={{margin: 7}} variant="body1">
+                        Status: {message}
+                    </Typography>
+                </div>
+            </Container>
+        );
     }
 
 }
