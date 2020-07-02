@@ -1,7 +1,4 @@
 import {makeStyles} from "@material-ui/core/styles";
-import TableContainer from "@material-ui/core/TableContainer";
-import React from "react";
-import Paper from "@material-ui/core/Paper";
 
 
 const useStyles = makeStyles(theme => ({

@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router";
+import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import GroupIcon from "@material-ui/icons/Group";
@@ -9,15 +10,41 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {Link} from "react-router-dom";
-import loginStyles from "./loginStyles";
 
-const Register = () => {
-    const classes = loginStyles();
-    const initialState = {username: "", password: ""};
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        marginTop: theme.spacing(7),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(3)
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2)
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: "100%"
+    }
+}));
+
+//todo need to add attemp to get message correct
+
+const Login = () => {
+    const classes = useStyles();
+    const initialState = {username: "", password: "", isAuthenticated: false, open: false};
     const [userInfo, setUserInfo] = useState(initialState);
     const [message, setMessage] = React.useState("");
     const [status, setStatus] = React.useState(0);
-    const [hasLoaded, setHasLoaded] = React.useState(false);
 
     const handleUserName = event => setUserInfo({...userInfo, username: event.target.value});
 
@@ -26,7 +53,7 @@ const Register = () => {
     const login = () => {
         console.log("User = " + userInfo.username + " : " + userInfo.password);
         const user = {username: userInfo.username, password: userInfo.password};
-        fetch("http://localhost:8080/register", {
+        fetch("http://localhost:8080/authenticate", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -39,17 +66,24 @@ const Register = () => {
             body: JSON.stringify(user)
         })
             .then(response => {
-                setHasLoaded(true);
                 console.log(response.status);
                 setStatus(response.status);
-                setMessage(status === 201 ? "Registration Successful" : "Registration failed try a different username");
+                return response.json();
+            })
+            .then(responseData => {
+                const {token} = responseData;
+                console.log("jwt token: " + token);
+                setMessage(status === 200 ? "Login Successful" : "Login failed");
+                if (status === 200 && token !== null){
+                    sessionStorage.setItem("jwt", token);
+                    setUserInfo({...userInfo, isAuthenticated: true});
+                }
             })
             .catch(err => console.error(err));
     };
 
-
-    if (status === 201) {
-        return (<Redirect to="/login"/>);
+    if (userInfo.isAuthenticated) {
+        return (<Redirect to="/view"/>);
     } else {
         return (
             <Container component="main" maxWidth="xs">
@@ -59,7 +93,7 @@ const Register = () => {
                         <GroupIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Register
+                        Login
                     </Typography>
                     <form className={classes.form} noValidate>
                         <Grid container spacing={2}>
@@ -98,16 +132,16 @@ const Register = () => {
                             className={classes.submit}
                             onClick={login}
                         >
-                            Register
+                            Login
                         </Button>
 
                         <Grid container justify="center">
                             <Grid item>
-                                <Link to="/login">Login</Link>
+                                <Link to="/register">Register</Link>
                             </Grid>
                         </Grid>
                     </form>
-                    {hasLoaded && <Typography style={{margin: 7}} variant="body1">Status: {message}</Typography>}
+                    <Typography style={{margin: 7}} variant="body1">Status: {message}</Typography>
                 </div>
             </Container>
         );
@@ -116,4 +150,4 @@ const Register = () => {
 }
 
 
-export default Register;
+export default Login;

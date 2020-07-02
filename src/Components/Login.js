@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Redirect} from "react-router";
-import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import GroupIcon from "@material-ui/icons/Group";
@@ -10,57 +9,22 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {Link} from "react-router-dom";
-
-
-const useStyles = makeStyles(theme => ({
-    paper: {
-        marginTop: theme.spacing(7),
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main
-    },
-    form: {
-        width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(3)
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2)
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: "100%"
-    }
-}));
-
-//todo need to add attemp to get message correct
+import loginStyles from "./loginStyles";
 
 const Login = () => {
-    const classes = useStyles();
+    const classes = loginStyles();
     const initialState = {username: "", password: "", isAuthenticated: false, open: false};
     const [userInfo, setUserInfo] = useState(initialState);
-    const [message, setMessage] = React.useState("");
+    const [message, setMessage] = useState("");
 
     const handleUserName = event => setUserInfo({...userInfo, username: event.target.value});
 
-    // const handleUserName = (event) => {
-    //     setUserInfo({...userInfo, username: event.target.value})
-    //     console.log("Event value = " + userInfo.username + " password: " + userInfo.password);
-    // }
+    const handlePassword = event => setUserInfo({...userInfo, password: event.target.value});
 
-    const handlePassword = (event) => {
-        setUserInfo({...userInfo, password: event.target.value})
-        console.log("Event value = " + userInfo.username + " password: " + userInfo.password);
-    }
-
-    const login = () => {
+    const login = async () => {
         console.log("User = " + userInfo.username + " : " + userInfo.password);
         const user = {username: userInfo.username, password: userInfo.password};
-        fetch("http://localhost:8080/authenticate", {
+        const response = await fetch("http://localhost:8080/authenticate", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -71,25 +35,15 @@ const Login = () => {
             redirect: "follow", // manual, *follow, error
             referrerPolicy: "no-referrer", // no-referrer, *client
             body: JSON.stringify(user)
-        })
-            .then(response => response.json())
-            .then(responseData => {
-                const {token} = responseData;
-                console.log("jwt token: " + token);
-                if (token !== null) {
-                    sessionStorage.setItem("jwt", token);
-                    setUserInfo({...userInfo, isAuthenticated: true});
-                } else {
-                    setUserInfo({...userInfo, open: true});
-                }
-            })
-            .catch(err => console.error(err));
+        });
+        let returnedStatus = response.status;
+        const {token} = await response.json();
+        if (returnedStatus === 200 && token !== null) {
+            sessionStorage.setItem("jwt", token);
+            setUserInfo({...userInfo, isAuthenticated: true});
+        }
+        setMessage(token ? "Login Successful" : "Login failed");
     };
-
-    useEffect(() => {
-        console.log('Cleanung up ');
-        setMessage(userInfo.isAuthenticated ? "" : "Login Failed");
-    }, [userInfo])
 
     if (userInfo.isAuthenticated) {
         return (<Redirect to="/view"/>);
@@ -150,9 +104,7 @@ const Login = () => {
                             </Grid>
                         </Grid>
                     </form>
-                    <Typography style={{margin: 7}} variant="body1">
-                        Status: {message}
-                    </Typography>
+                    <Typography style={{margin: 7}} variant="body1">{message}</Typography>
                 </div>
             </Container>
         );
