@@ -6,28 +6,10 @@ import Login from "./Components/Login";
 import Logout from "./Components/Logout";
 import Register from "./Components/Register";
 import UpdateCredential from "./Components/UpdateCredential";
-import {createStore} from "redux";
-import {Provider} from "react-redux";
 
 const App = () => {
 
-    const initialState = {
-        currentUser: {}
-    }
-
-    const reducer = (state = initialState, action) => {
-        switch (action.type) {
-            case 'LOGIN_USER':
-                return {...state, currentUser: action.payload}
-            default:
-                return state;
-        }
-    }
-
-    const store = createStore(reducer);
-
     return (
-        <Provider store={store}>
             <Router>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/logout" component={Logout}/>
@@ -36,7 +18,6 @@ const App = () => {
                 <Route exact path="/view" component={Table}/>
                 <Route exact path="/update" component={UpdateCredential}/>
             </Router>
-        </Provider>
     );
 
 }

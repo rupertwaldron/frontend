@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Redirect} from "react-router";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
-import GroupIcon from "@material-ui/icons/Group";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";

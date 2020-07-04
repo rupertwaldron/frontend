@@ -3,13 +3,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import addStyles from "./addStyles";
 import NavBar from "./NavBar";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 export default function AddCredential() {
     const classes = addStyles();
@@ -65,10 +65,10 @@ export default function AddCredential() {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <GroupIcon />
+                    <LockOpenIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Employee Directory
+                    New Credential
                 </Typography>
                 <NavBar activeUser = {sessionStorage.getItem("activeUser")}/>
                 <form className={classes.form} noValidate>
