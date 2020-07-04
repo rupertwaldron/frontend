@@ -42,10 +42,11 @@ const Login = () => {
         const {token} = await response.json();
         if (returnedStatus === 200 && token !== null) {
             sessionStorage.setItem("jwt", token);
-            sessionStorage.setItem("username", userInfo.username);
+            sessionStorage.setItem("activeUser", userInfo.username);
             setUserInfo({...userInfo, isAuthenticated: true});
         }
         setMessage(token ? "Login Successful" : "Login failed");
+        console.log("Username stored as = " + sessionStorage.getItem("activeUser"));
     };
 
     if (userInfo.isAuthenticated) {
@@ -61,7 +62,7 @@ const Login = () => {
                     <Typography component="h1" variant="h5">
                         Login
                     </Typography>
-                    <NavBar/>
+                    <NavBar activeUser = {sessionStorage.getItem("activeUser")}/>
                     <form className={classes.form} noValidate>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>

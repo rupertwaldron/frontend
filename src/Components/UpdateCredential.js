@@ -98,7 +98,7 @@ export default function UpdateCredential(props) {
                 <Typography component="h1" variant="h5">
                     Update Credentials
                 </Typography>
-                <NavBar/>
+                <NavBar activeUser = {sessionStorage.getItem("activeUser")}/>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>

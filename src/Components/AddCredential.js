@@ -70,7 +70,7 @@ export default function AddCredential() {
                 <Typography component="h1" variant="h5">
                     Employee Directory
                 </Typography>
-                <NavBar/>
+                <NavBar activeUser = {sessionStorage.getItem("activeUser")}/>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>

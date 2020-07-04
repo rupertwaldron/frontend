@@ -53,6 +53,7 @@ export default function SimpleTable() {
 
     if (firstLoad) {
         console.log("sessionStorage = " + sessionStorage.getItem('jwt'));
+        console.log("Username stored as = " + sessionStorage.getItem("activeUser"));
         sampleFunc();
         setLoad(false);
     }
@@ -129,7 +130,7 @@ export default function SimpleTable() {
                 Credentials
             </Typography>
 
-            <NavBar/>
+            <NavBar activeUser = {sessionStorage.getItem("activeUser")}/>
 
             {/*{(isLoading && statusCode === 200) ? <CircularProgress/> : view}*/}
 

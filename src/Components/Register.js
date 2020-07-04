@@ -103,7 +103,7 @@ const Register = () => {
 
                         <Grid container justify="center">
                             <Grid item>
-                                <Link to="/login">Login</Link>
+                                <Link to="/">Login</Link>
                             </Grid>
                         </Grid>
                     </form>

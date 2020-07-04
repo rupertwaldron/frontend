@@ -9,44 +9,81 @@ import Tooltip from '@material-ui/core/Tooltip';
 import navStyles from "./navStyles";
 
 
-const NavBar = () => {
+const NavBar = (props) => {
     const classes = navStyles();
-    //console.log("Username = " + sessionStorage.getItem('userName'));
-    return (
-        <div>
+    console.log("Username in navbar = " + sessionStorage.getItem('activeUser'));
 
-                    <Link to="/view">
+    if (props.activeUser !== null) {
+        return  (<div>
 
-                        <Tooltip title="View Credentials">
-                            <Home/>
-                        </Tooltip>
+            <Link to="/view">
 
-                    </Link>
+                <Tooltip title="View Credentials">
+                    <Home/>
+                </Tooltip>
 
+            </Link>
 
+            <Link to="/add">
+                <Tooltip title="New Credential">
 
+                    <LockOpen/>
+                </Tooltip>
 
-                    <Link  to="/add">
-                        <Tooltip title="New Credential">
-
-                            <LockOpen/>
-                        </Tooltip>
-
-                    </Link>
+            </Link>
 
 
+            <Link to="/logout">
+                {/*<Tooltip title={`Logout ${props.activeUser}`}>*/}
+                <Tooltip title={`Logout ${props.activeUser}`}>
+                    <Person/>
+                </Tooltip>
 
-                    <Link to="/">
-                        <Tooltip title="Logout">
+            </Link>
 
-                            <Person/>
-                        </Tooltip>
+        </div>);
+    } else {
+        return (
+            <Link to="/logout">
+                {/*<Tooltip title={`Logout ${props.activeUser}`}>*/}
+                <Tooltip title={"Login"}>
+                    <Person/>
+                </Tooltip>
 
-                    </Link>
+            </Link>
+        )
+    }
+    //
+    // return (
+    //     <div>
+    //
+    //         <Link to="/view">
+    //
+    //             <Tooltip title="View Credentials">
+    //                 <Home/>
+    //             </Tooltip>
+    //
+    //         </Link>
+    //
+    //         <Link to="/add">
+    //             <Tooltip title="New Credential">
+    //
+    //                 <LockOpen/>
+    //             </Tooltip>
+    //
+    //         </Link>
+    //
+    //
+    //         <Link to="/logout">
+    //             {/*<Tooltip title={`Logout ${props.activeUser}`}>*/}
+    //             <Tooltip title={props.activeUser != null ? `Logout ${props.activeUser}` : "Login"}>
+    //                 <Person/>
+    //             </Tooltip>
+    //
+    //         </Link>
+    //
+    //     </div>
 
-        </div>
-
-    )
 }
 
 
