@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {Redirect} from "react-router";
 import useStyles from "./styles";
+import NavBar from "./NavBar";
+import Grid from "@material-ui/core/Grid";
 
 
 export default function SimpleTable() {
@@ -104,7 +106,7 @@ export default function SimpleTable() {
                 case 200:
                     return view
                 case 401:
-                    return (<Redirect to="/login"/>);
+                    return (<Redirect to="/"/>);
                 //case 401: return <h3>UnAuthorized</h3>
                 default:
                     return <h3>Server Error</h3>
@@ -115,7 +117,13 @@ export default function SimpleTable() {
 
 
     return (
+
         <div className={classes.paper}>
+            <Grid container justify="center">
+                <Grid item>
+                    <NavBar/>
+                </Grid>
+            </Grid>
             <Avatar className={classes.avatar}>
                 <LockOpenIcon/>
             </Avatar>
@@ -127,12 +135,8 @@ export default function SimpleTable() {
 
             {getDisplay()}
 
-            <Link className={classes.link} to="/">
-                {" "}
-                <Typography align="left">
-                    &#x2190; Head back to save data
-                </Typography>{" "}
-            </Link>
+
         </div>
+
     );
 }

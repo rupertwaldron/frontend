@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     link: {
         color: "rgba(0,0,0,0.65)",
         textDecoration: "none",
-        marginLeft: "10%",
+        marginLeft: "-100%",
         alignSelf: "flex-start",
         "&:hover": {
             color: "rgba(0,0,0,1)"

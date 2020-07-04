@@ -1,6 +1,6 @@
 import React from "react";
 import AddCredential from "./Components/AddCredential";
-import {Route, BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import Table from "./Components/Table";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
@@ -28,9 +28,9 @@ const App = () => {
     return (
         <Provider store={store}>
             <Router>
-                <Route exact path="/login" component={Login}/>
+                <Route exact path="/" component={Login}/>
                 <Route exact path="/register" component={Register}/>
-                <Route exact path="/" component={AddCredential}/>
+                <Route exact path="/add" component={AddCredential}/>
                 <Route exact path="/view" component={Table}/>
                 <Route exact path="/update" component={UpdateCredential}/>
             </Router>

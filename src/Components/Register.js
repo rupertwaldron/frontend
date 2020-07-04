@@ -49,7 +49,7 @@ const Register = () => {
 
 
     if (status === 201) {
-        return (<Redirect to="/login"/>);
+        return (<Redirect to="/"/>);
     } else {
         return (
             <Container component="main" maxWidth="xs">

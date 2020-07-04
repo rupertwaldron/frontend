@@ -9,6 +9,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import NavBar from "./NavBar";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -114,6 +115,11 @@ export default function UpdateCredential(props) {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
+                <Grid container justify="center">
+                    <Grid item>
+                        <NavBar/>
+                    </Grid>
+                </Grid>
                 <Avatar className={classes.avatar}>
                     <GroupIcon />
                 </Avatar>
