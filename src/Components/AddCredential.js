@@ -7,36 +7,12 @@ import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-const useStyles = makeStyles(theme => ({
-    paper: {
-        marginTop: theme.spacing(7),
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main
-    },
-    form: {
-        width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(3)
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2)
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: "100%"
-    }
-}));
+import addStyles from "./addStyles";
+import NavBar from "./NavBar";
 
 export default function AddCredential() {
-    const classes = useStyles();
+    const classes = addStyles();
     const [firstLoad, setLoad] = React.useState(true);
 
     const [credentialName, setCredentialName] = React.useState("");
@@ -88,6 +64,11 @@ export default function AddCredential() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
+                <Grid container justify="center">
+                    <Grid item>
+                        <NavBar/>
+                    </Grid>
+                </Grid>
                 <Avatar className={classes.avatar}>
                     <GroupIcon />
                 </Avatar>

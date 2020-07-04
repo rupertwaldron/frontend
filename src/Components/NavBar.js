@@ -5,12 +5,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 import {Home, LockOpen, Person} from '@material-ui/icons'
 import {Link} from "react-router-dom";
-import useStyles from "./styles";
 import Tooltip from '@material-ui/core/Tooltip';
+import navStyles from "./navStyles";
 
 
 const NavBar = (props) => {
-    const classes = useStyles();
+    const classes = navStyles();
     return (
         <List component="nav">
             <ListItem component="div">
