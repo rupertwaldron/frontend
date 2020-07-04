@@ -15,6 +15,9 @@ import {Redirect} from "react-router";
 import useStyles from "./styles";
 import NavBar from "./NavBar";
 import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
+import {LockOpen, Person} from "@material-ui/icons";
+import ListItemText from "@material-ui/core/ListItemText";
 
 
 export default function SimpleTable() {
@@ -119,11 +122,6 @@ export default function SimpleTable() {
     return (
 
         <div className={classes.paper}>
-            <Grid container justify="center">
-                <Grid item>
-                    <NavBar/>
-                </Grid>
-            </Grid>
             <Avatar className={classes.avatar}>
                 <LockOpenIcon/>
             </Avatar>
@@ -131,10 +129,11 @@ export default function SimpleTable() {
                 Credentials
             </Typography>
 
+            <NavBar/>
+
             {/*{(isLoading && statusCode === 200) ? <CircularProgress/> : view}*/}
 
             {getDisplay()}
-
 
         </div>
 

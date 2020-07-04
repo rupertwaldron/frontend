@@ -3,6 +3,7 @@ import {Redirect} from "react-router";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Avatar from "@material-ui/core/Avatar";
 import GroupIcon from "@material-ui/icons/Group";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -10,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {Link} from "react-router-dom";
 import loginStyles from "./loginStyles";
+import NavBar from "./NavBar";
 
 const Login = () => {
     const classes = loginStyles();
@@ -40,6 +42,7 @@ const Login = () => {
         const {token} = await response.json();
         if (returnedStatus === 200 && token !== null) {
             sessionStorage.setItem("jwt", token);
+            sessionStorage.setItem("username", userInfo.username);
             setUserInfo({...userInfo, isAuthenticated: true});
         }
         setMessage(token ? "Login Successful" : "Login failed");
@@ -53,11 +56,12 @@ const Login = () => {
                 <CssBaseline/>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <GroupIcon/>
+                        <LockOpenIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Login
                     </Typography>
+                    <NavBar/>
                     <form className={classes.form} noValidate>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>

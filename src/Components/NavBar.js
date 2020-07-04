@@ -9,48 +9,43 @@ import Tooltip from '@material-ui/core/Tooltip';
 import navStyles from "./navStyles";
 
 
-const NavBar = (props) => {
+const NavBar = () => {
     const classes = navStyles();
+    //console.log("Username = " + sessionStorage.getItem('userName'));
     return (
-        <List component="nav">
-            <ListItem component="div">
-                <ListItemText inset>
-                    <Link className={classes.link} to="/view">
-                        <Typography color="inherit" variant="title">
-                            <Tooltip title="View Credentials">
+        <div>
+
+                    <Link to="/view">
+
+                        <Tooltip title="View Credentials">
                             <Home/>
-                            </Tooltip>
-                        </Typography>{" "}
+                        </Tooltip>
+
                     </Link>
-                </ListItemText>
 
 
-                <ListItemText inset>
 
-                    <Link className={classes.link} to="/add">
-                        <Typography color="inherit" variant="title">
-                            <Tooltip title="Add Credential">
+
+                    <Link  to="/add">
+                        <Tooltip title="New Credential">
+
                             <LockOpen/>
-                            </Tooltip>
-                        </Typography>{" "}
+                        </Tooltip>
+
                     </Link>
 
-                </ListItemText>
 
-                <ListItemText inset>
 
-                    <Link className={classes.link} to="/">
-                        <Typography color="inherit" variant="title">
-                            <Tooltip title="Logout">
+                    <Link to="/">
+                        <Tooltip title="Logout">
+
                             <Person/>
-                            </Tooltip>
-                        </Typography>{" "}
+                        </Tooltip>
+
                     </Link>
 
-                </ListItemText>
-            </ListItem>
+        </div>
 
-        </List>
     )
 }
 

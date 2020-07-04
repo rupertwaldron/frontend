@@ -64,17 +64,13 @@ export default function AddCredential() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Grid container justify="center">
-                    <Grid item>
-                        <NavBar/>
-                    </Grid>
-                </Grid>
                 <Avatar className={classes.avatar}>
                     <GroupIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Employee Directory
                 </Typography>
+                <NavBar/>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>

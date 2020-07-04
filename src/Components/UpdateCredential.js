@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Grid from "@material-ui/core/Grid";
 import GroupIcon from "@material-ui/icons/Group";
 import Typography from "@material-ui/core/Typography";
@@ -91,17 +92,13 @@ export default function UpdateCredential(props) {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Grid container justify="center">
-                    <Grid item>
-                        <NavBar/>
-                    </Grid>
-                </Grid>
                 <Avatar className={classes.avatar}>
-                    <GroupIcon />
+                    <LockOpenIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Employee Directory
+                    Update Credentials
                 </Typography>
+                <NavBar/>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
