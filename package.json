@@ -1,8 +1,9 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "proxy": "http://localhost:8080",
+  "proxy": "https://springcert-brave-manatee-ij.cfapps.io",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
