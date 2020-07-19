@@ -49,7 +49,7 @@ export default function UpdateCredential(props) {
     }
 
     async function handleDelete() {
-        const response = await fetch(`/credentials/` + uuid, {
+        const response = await fetch(`http://localhost:8080/credentials/` + uuid, {
             method: "DELETE", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
