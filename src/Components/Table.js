@@ -25,7 +25,7 @@ export default function SimpleTable() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     async function sampleFunc() {
-        let response = await fetch("http://localhost:8080/credentials", {
+        let response = await fetch("https://springcert-brave-manatee-ij.cfapps.io/credentials", {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

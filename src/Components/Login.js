@@ -25,7 +25,7 @@ const Login = () => {
     const login = async () => {
         console.log("User = " + userInfo.username + " : " + userInfo.password);
         const user = {username: userInfo.username, password: userInfo.password};
-        const response = await fetch("http://localhost:8080/authenticate", {
+        const response = await fetch("https://springcert-brave-manatee-ij.cfapps.io/authenticate", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
