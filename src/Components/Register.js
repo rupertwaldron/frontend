@@ -26,7 +26,7 @@ const Register = () => {
     const login = () => {
         console.log("User = " + userInfo.username + " : " + userInfo.password);
         const user = {username: userInfo.username, password: userInfo.password};
-        fetch("/register", {
+        fetch("http://localhost:8080/register", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

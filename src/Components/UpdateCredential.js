@@ -30,7 +30,7 @@ export default function UpdateCredential(props) {
     const [message, setMessage] = React.useState("Nothing saved in the session");
 
     async function sampleFunc(toInput) {
-        const response = await fetch(`/credentials/` + uuid, {
+        const response = await fetch(`http://localhost:8080/credentials/` + uuid, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
