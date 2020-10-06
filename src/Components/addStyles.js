@@ -1,5 +1,4 @@
 import {makeStyles} from "@material-ui/core/styles";
-import loginStyles from "./loginStyles";
 
 const addStyles = makeStyles(theme => ({
     paper: {

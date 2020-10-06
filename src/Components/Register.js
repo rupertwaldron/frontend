@@ -78,6 +78,7 @@ const Register = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    type="password"
                                     variant="outlined"
                                     required
                                     fullWidth
